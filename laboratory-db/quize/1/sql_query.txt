@@ -1,0 +1,26 @@
+1-
+SELECT *
+FROM customer
+WHERE customer.CustomerID IN (SELECT order_.CustomerID FROM order_ WHERE order_.TotalAmount > 10000 AND order_.OrderID IN (SELECT product.ProductID FROM product WHERE product.Name != "Mouse" AND product.Name !="Keyboard"));
+
+2-
+SELECT *
+FROM product
+WHERE product.Name LIKE 'M%'AND product.Stock > 130;
+
+3-
+SELECT *
+FROM orderitem
+WHERE orderitem.OrderID IN ( SELECT order_.OrderID FROM order_
+WHERE order_.CustomerID IN (SELECT customer.CustomerID FROM customer  WHERE customer.Gender ='men' AND customer.Address ='Mashhad'));
+
+4-
+SELECT *
+FROM customer
+INNER JOIN orderitem ON customer.CustomerID IN (SELECT order_.CustomerID FROM order_ WHERE order_.OrderID IN (SELECT orderitem.OrderID FROM orderitem) );
+
+نسخه بهترش 
+SELECT *
+FROM order_
+INNER JOIN orderitem ON order_.OrderID = orderitem.OrderID
+INNER JOIN customer ON customer.CustomerID = order_.CustomerID;
